@@ -8,6 +8,8 @@ export const FetchACat: React.FC = () => {
     const [error, setError] = useState<unknown>(null)
 
     const onFetch = () => {
+        if (isLoading) return
+
         setIsLoading(true)
         setError(null)
         fetchCats()
@@ -27,9 +29,14 @@ export const FetchACat: React.FC = () => {
     return (
         <div className="app-container">
             <h1>Fetch-a-Cat</h1>
-            <button onClick={onFetch}>Fetch</button>
+            <button disabled={isLoading} onClick={onFetch}>
+                Fetch
+            </button>
             {isLoading && <div>Cats are coming, please be patient</div>}
             {isError && <div>We have an error, sorry</div>}
+            {cats.length === 0 && !isLoading && (
+                <div>No cats yet. Please press the Fetch button</div>
+            )}
             <div className={isLoading ? "is-loading" : ""}>
                 <Masonry columnsCount={3}>
                     {cats?.map((c) => (
