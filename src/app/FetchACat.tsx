@@ -21,10 +21,12 @@ export const FetchACat: React.FC = () => {
             .catch((error) => {
                 setIsLoading(false)
                 setError(error)
+                setCats([])
             })
     }
 
     const isError = !!error
+    const noCatsYet = cats.length === 0 && !isLoading && !isError
 
     return (
         <div className="app-container">
@@ -34,9 +36,7 @@ export const FetchACat: React.FC = () => {
             </button>
             {isLoading && <div>Cats are coming, please be patient</div>}
             {isError && <div>We have an error, sorry</div>}
-            {cats.length === 0 && !isLoading && (
-                <div>No cats yet. Please press the Fetch button</div>
-            )}
+            {noCatsYet && <div>No cats yet. Please press the Fetch button</div>}
             <div className={isLoading ? "is-loading" : ""}>
                 <Masonry columnsCount={3}>
                     {cats?.map((c) => (
