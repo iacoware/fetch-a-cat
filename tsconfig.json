@@ -11,7 +11,7 @@
     "allowJs": false,
     "strict": true,
     "strictNullChecks": true,
-    // "noImplicitAny": false, // disallow implicit any type,
   },
-  "include": ["./src/**/*"]
+  "include": ["index.d.ts","./src/**/*"],
+  "exclude": ["node_modules", ".parcel-cache", ".build", "dist"]
 }

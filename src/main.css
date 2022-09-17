@@ -6,3 +6,26 @@ body {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 16px;
 }
+
+img {
+    /*width: 100%;*/
+    display: block;
+    margin: 0.5rem;
+}
+
+button {
+    padding: 0.25rem 1rem;
+    margin-right: 2rem;
+}
+
+.app-container {
+    margin-top: 2rem;
+}
+
+.is-loading {
+    opacity: 0.5;
+}
+
+.selected {
+    border: blueviolet 3px solid;
+}
