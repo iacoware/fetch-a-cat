@@ -39,6 +39,9 @@ export const fetchACat = createMachine<Context, Events>(
                     },
                     selected: {
                         on: {
+                            SELECT: {
+                                actions: ["setSelected"],
+                            },
                             UNSELECT: {
                                 target: "unselected",
                                 actions: ["clearSelected"],
