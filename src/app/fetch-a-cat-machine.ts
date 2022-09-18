@@ -26,14 +26,25 @@ export const fetchACat = createMachine<Context, Events>(
                 },
             },
             fetched: {
-                on: {
-                    FETCH: { target: "fetching" },
-                    SELECT: { target: "selected", actions: ["setSelected"] },
-                },
-            },
-            selected: {
-                on: {
-                    UNSELECT: { target: "fetched", actions: ["clearSelected"] },
+                initial: "unselected",
+                states: {
+                    unselected: {
+                        on: {
+                            FETCH: { target: "#fetch-a-cat.fetching" },
+                            SELECT: {
+                                target: "selected",
+                                actions: ["setSelected"],
+                            },
+                        },
+                    },
+                    selected: {
+                        on: {
+                            UNSELECT: {
+                                target: "unselected",
+                                actions: ["clearSelected"],
+                            },
+                        },
+                    },
                 },
             },
             error: {

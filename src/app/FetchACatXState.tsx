@@ -40,7 +40,7 @@ export const FetchACatXState: React.FC = () => {
                         />
                     ))}
                 </Masonry>
-                {state.matches("selected") && (
+                {state.matches("fetched.selected") && (
                     <div className="modal">
                         <img
                             key={selectedCat?.id}
