@@ -8,18 +8,23 @@ body {
 }
 
 img {
-    /*width: 100%;*/
     display: block;
     margin: 0.5rem;
+    cursor: pointer;
 }
 
 button {
     padding: 0.25rem 1rem;
     margin-right: 2rem;
+    margin-bottom: 0.5rem;
 }
 
 .app-container {
     margin-top: 2rem;
+}
+
+.img-container {
+    position: relative;
 }
 
 .is-loading {
@@ -29,3 +34,18 @@ button {
 .selected {
     border: blueviolet 3px solid;
 }
+
+.modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: #efefef 1rem solid;
+}
+
+.modal img {
+    width: 100%;
+    margin: 0;
+    object-fit: cover;
+}
+
