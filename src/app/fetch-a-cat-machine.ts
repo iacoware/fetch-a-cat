@@ -1,8 +1,9 @@
 import { assign, createMachine, DoneInvokeEvent } from "xstate"
 import { Cat, fetchCats } from "../common/api"
 
-type Context = { cats: Cat[] }
-type Events = { type: "FETCH" }
+type Context = { cats: Cat[]; selected?: Cat }
+type SelectedEvent = { type: "SELECT"; selected: Cat }
+type Events = { type: "FETCH" } | SelectedEvent | { type: "UNSELECT" }
 
 export const fetchACat = createMachine<Context, Events>(
     {
@@ -27,6 +28,12 @@ export const fetchACat = createMachine<Context, Events>(
             fetched: {
                 on: {
                     FETCH: { target: "fetching" },
+                    SELECT: { target: "selected", actions: ["setSelected"] },
+                },
+            },
+            selected: {
+                on: {
+                    UNSELECT: { target: "fetched", actions: ["clearSelected"] },
                 },
             },
             error: {
@@ -43,6 +50,12 @@ export const fetchACat = createMachine<Context, Events>(
             }),
             clearCats: assign<Context, Events>({
                 cats: () => [],
+            }),
+            setSelected: assign<Context, Events>({
+                selected: (_, ev) => (ev as SelectedEvent).selected,
+            }),
+            clearSelected: assign<Context, Events>({
+                selected: () => undefined,
             }),
         },
         services: {
