@@ -26,6 +26,8 @@ export const FetchACatXState: React.FC = () => {
             {state.matches("fetching") && (
                 <div>Cats are coming, please be patient</div>
             )}
+            {state.matches("error") && <div>We have an error, sorry</div>}
+
             <div className={isLoading ? "is-loading" : ""}>
                 <Masonry columnsCount={3}>
                     {cats.map((c) => (
@@ -33,15 +35,6 @@ export const FetchACatXState: React.FC = () => {
                     ))}
                 </Masonry>
             </div>
-            {/*
-            {isError && <div>We have an error, sorry</div>}
-            <div className={isLoading ? "is-loading" : ""}>
-                <Masonry columnsCount={3}>
-                    {cats?.map((c) => (
-                        <img key={c.id} src={c.url} />
-                    ))}
-                </Masonry>
-            </div>*/}
         </div>
     )
 }

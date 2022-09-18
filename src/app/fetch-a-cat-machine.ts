@@ -21,7 +21,7 @@ export const fetchACat = createMachine<Context, Events>(
                 invoke: {
                     src: "fetchCats",
                     onDone: { target: "fetched", actions: ["setCats"] },
-                    onError: { target: "error" },
+                    onError: { target: "error", actions: ["clearCats"] },
                 },
             },
             fetched: {
@@ -29,13 +29,20 @@ export const fetchACat = createMachine<Context, Events>(
                     FETCH: { target: "fetching" },
                 },
             },
-            error: {},
+            error: {
+                on: {
+                    FETCH: { target: "fetching" },
+                },
+            },
         },
     },
     {
         actions: {
             setCats: assign<Context, Events>({
                 cats: (_, ev) => (ev as DoneInvokeEvent<Cat[]>).data,
+            }),
+            clearCats: assign<Context, Events>({
+                cats: () => [],
             }),
         },
         services: {
