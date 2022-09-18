@@ -5,12 +5,20 @@ import { fetchACat } from "./fetch-a-cat-machine"
 export const FetchACatXState: React.FC = () => {
     const [state, send] = useMachine(fetchACat)
 
-    const onFetch = () => {}
+    console.log(state.value)
+
+    const onFetch = () => {
+        send({ type: "FETCH" })
+    }
 
     return (
         <div className="app-container">
             <h1>Fetch-a-Cat - XState</h1>
             <button onClick={onFetch}>Fetch</button>
+
+            {state.matches("notYetFetched") && (
+                <div>No cats yet. Please press the Fetch button</div>
+            )}
             {/*{isLoading && <div>Cats are coming, please be patient</div>}
             {isError && <div>We have an error, sorry</div>}
             {noCatsYet && <div>No cats yet. Please press the Fetch button</div>}
