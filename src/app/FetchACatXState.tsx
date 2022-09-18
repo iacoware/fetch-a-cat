@@ -1,8 +1,10 @@
-import React, { useState } from "react"
-import { Cat, fetchCats } from "../common/api"
-import Masonry from "react-responsive-masonry"
+import React from "react"
+import { useMachine } from "@xstate/react"
+import { fetchACat } from "./fetch-a-cat-machine"
 
 export const FetchACatXState: React.FC = () => {
+    const [state, send] = useMachine(fetchACat)
+
     const onFetch = () => {}
 
     return (
