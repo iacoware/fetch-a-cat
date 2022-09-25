@@ -7,19 +7,16 @@ import { Cat } from "../common/api"
 export const FetchACatXState: React.FC = () => {
     const [state, send] = useMachine(fetchACat)
 
-    console.log(state.value, state.context)
-
     const onFetch = () => send({ type: "FETCH" })
     const onSelect = (cat: Cat) => send({ type: "SELECT", selected: cat })
-    const onDeselect = () => send({ type: "UNSELECT" })
+    const onUnselect = () => send({ type: "UNSELECT" })
 
     const isLoading = state.matches("fetching")
     const cats = state.context.cats
-    const selectedCat = state.context.selected
-
     return (
         <div className="app-container">
             <h1>Fetch-a-Cat - XState</h1>
+            <pre>{JSON.stringify(state.value)}</pre>
             <button onClick={onFetch}>Fetch</button>
 
             {state.matches("notYetFetched") && (
@@ -43,9 +40,9 @@ export const FetchACatXState: React.FC = () => {
                 {state.matches("fetched.selected") && (
                     <div className="modal">
                         <img
-                            key={selectedCat?.id}
-                            src={selectedCat?.url}
-                            onClick={onDeselect}
+                            key={state.context.selected.id}
+                            src={state.context.selected.url}
+                            onClick={onUnselect}
                         />
                     </div>
                 )}
