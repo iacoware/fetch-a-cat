@@ -1,6 +1,6 @@
 import React from "react"
 import { useMachine } from "@xstate/react"
-import { fetchACat } from "./fetch-a-cat-machine"
+import { fetchACat, matches } from "./fetch-a-cat-machine"
 import Masonry from "react-responsive-masonry"
 import { Cat } from "../common/api"
 
@@ -13,6 +13,10 @@ export const FetchACatXState: React.FC = () => {
 
     const isLoading = state.matches("fetching")
     const cats = state.context.cats
+
+    if (matches(state, { fetched: "selected" })) {
+        const a = state.context.selected
+    }
 
     return (
         <div className="app-container">
@@ -38,11 +42,11 @@ export const FetchACatXState: React.FC = () => {
                         />
                     ))}
                 </Masonry>
-                {state.matches({ fetched: "selected" }) && (
+                {matches(state, { fetched: "selected" }) && (
                     <div className="modal">
                         <img
-                            key={state.context.selected?.id}
-                            src={state.context.selected?.url}
+                            key={state.context.selected.id}
+                            src={state.context.selected.url}
                             onClick={onUnselect}
                         />
                     </div>
