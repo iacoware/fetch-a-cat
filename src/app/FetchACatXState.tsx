@@ -13,6 +13,7 @@ export const FetchACatXState: React.FC = () => {
 
     const isLoading = state.matches("fetching")
     const cats = state.context.cats
+    console.log("cats", cats)
     return (
         <div className="app-container">
             <h1>Fetch-a-Cat - XState</h1>
@@ -37,11 +38,11 @@ export const FetchACatXState: React.FC = () => {
                         />
                     ))}
                 </Masonry>
-                {state.matches("fetched.selected") && (
+                {state.matches({ fetched: "selected" }) && (
                     <div className="modal">
                         <img
-                            key={state.context.selected.id}
-                            src={state.context.selected.url}
+                            key={state.context.selected?.id}
+                            src={state.context.selected?.url}
                             onClick={onUnselect}
                         />
                     </div>
