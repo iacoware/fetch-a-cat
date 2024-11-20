@@ -1,13 +1,4 @@
-import {
-    assign,
-    setup,
-    DoneActorEvent,
-    assertEvent,
-    fromPromise,
-    StateFrom,
-    AnyStateMachine,
-    StateValueFrom,
-} from "xstate"
+import { assertEvent, assign, DoneActorEvent, fromPromise, setup } from "xstate"
 import { Cat, delay, fetchCats } from "../common/api"
 
 type InitialContext = { cats: Cat[]; selected?: Cat }
@@ -15,25 +6,13 @@ type SelectedContext = { cats: Cat[]; selected: Cat }
 type ErrorContext = { cats: Cat[]; error: unknown }
 type Context = { cats: Cat[]; selected?: Cat; error?: unknown }
 
-type Typestates =
+export type FetchACatStates =
     | { value: "notYetFetched"; context: InitialContext }
     | { value: "fetching"; context: InitialContext }
     | { value: "fetched"; context: InitialContext }
     | { value: { fetched: "unselected" }; context: InitialContext }
     | { value: { fetched: "selected" }; context: SelectedContext }
     | { value: "error"; context: ErrorContext }
-
-type ContextForValue<V> = Extract<Typestates, { value: V }>["context"]
-
-type FetchACatMachine = StateFrom<typeof fetchACat>
-type Values = FetchACatMachine["value"]
-
-export const matches = <T extends FetchACatMachine, V extends Values>(
-    state: T,
-    value: V,
-): state is T & { context: ContextForValue<V> } => {
-    return state.matches(value)
-}
 
 type SelectedEvent = { type: "SELECT"; selected: Cat }
 type Events =
