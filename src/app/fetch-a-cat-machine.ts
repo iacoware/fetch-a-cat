@@ -94,7 +94,7 @@ export const fetchACat = createMachine<Context, Events, Typestates>(
         },
         services: {
             fetchCats: async () => {
-                // Too faaaaast, slow it down
+                // Too fast, slow it down
                 await delay(1000)
                 return fetchCats()
             },
