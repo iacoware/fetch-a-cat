@@ -39,9 +39,7 @@ export const FetchACat: React.FC = () => {
             {noCatsYet && <div>No cats yet. Please press the Fetch button</div>}
             <div className={isLoading ? "is-loading" : ""}>
                 <Masonry columnsCount={3}>
-                    {cats?.map((c) => (
-                        <img key={c.id} src={c.url} />
-                    ))}
+                    {cats?.map((c) => <img key={c.id} src={c.url} />)}
                 </Masonry>
             </div>
         </div>

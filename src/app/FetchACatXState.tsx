@@ -13,7 +13,7 @@ export const FetchACatXState: React.FC = () => {
 
     const isLoading = state.matches("fetching")
     const cats = state.context.cats
-    console.log("cats", cats)
+
     return (
         <div className="app-container">
             <h1>Fetch-a-Cat - XState</h1>
