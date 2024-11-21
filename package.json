@@ -23,7 +23,7 @@
         "rimraf": "6.0.1",
         "xstate": "5.19.0",
         "@xstate/react": "5.0.0",
-        "react-responsive-masonry": "2.4.1"
+        "react-responsive-masonry": "2.3.0"
     },
     "devDependencies": {
         "@types/react": "18.3.12",
