@@ -50,7 +50,7 @@ export const fetchACat = setup({
         }),
     },
     actors: {
-        fetchCats: fromPromise(async () => {
+        fetchCats: fromPromise(async ({ input }) => {
             // Too fast, slow it down
             await delay(1000)
             return fetchCats()
@@ -74,11 +74,11 @@ export const fetchACat = setup({
                 src: "fetchCats",
                 onDone: {
                     target: "fetched",
-                    actions: [{ type: "setCats" }],
+                    actions: ["setCats"],
                 },
                 onError: {
                     target: "error",
-                    actions: [{ type: "setError" }, { type: "clearCats" }],
+                    actions: ["setError", "clearCats"],
                 },
             },
         },
@@ -90,18 +90,18 @@ export const fetchACat = setup({
                         FETCH: { target: "#fetch-a-cat.fetching" },
                         SELECT: {
                             target: "selected",
-                            actions: [{ type: "setSelected" }],
+                            actions: ["setSelected"],
                         },
                     },
                 },
                 selected: {
                     on: {
                         SELECT: {
-                            actions: [{ type: "setSelected" }],
+                            actions: ["setSelected"],
                         },
                         UNSELECT: {
                             target: "unselected",
-                            actions: [{ type: "clearSelected" }],
+                            actions: ["clearSelected"],
                         },
                     },
                 },

@@ -1,47 +1,42 @@
-import { AnyStateMachine, StateFrom, StateValueFrom } from "xstate"
+import { MachineSnapshot, StateFrom, StateValueFrom } from "xstate"
 import { fetchACat, FetchACatStates } from "./fetch-a-cat-machine"
 
-type TypestatesA = Array<{
-    value: unknown
-    context: unknown
-}>
-type TypestatesU = { value: unknown; context: unknown }
+type TypeStateUnknown = { value: unknown; context: unknown }
 
-type ContextForValue<V> = Extract<FetchACatStates, { value: V }>["context"]
-type ContextForValue2<TS extends TypestatesU, V> = Extract<
+type ContextForValue<TS extends TypeStateUnknown, V> = Extract<
     TS,
     { value: V }
 >["context"]
 
 export const matches0 = <
-    T extends StateFrom<typeof fetchACat>,
+    S extends StateFrom<typeof fetchACat>,
     V extends StateValueFrom<typeof fetchACat>,
 >(
-    state: T,
+    state: S,
     value: V,
-): state is T & { context: ContextForValue<V> } => {
+): state is S & { context: ContextForValue<FetchACatStates, V> } => {
     return state.matches(value)
 }
 
+// NOTE: It doesn't know that V is valid for FetchACatStates
 export const matches1 = <
-    M extends AnyStateMachine,
-    S extends StateFrom<M> = StateFrom<M>,
-    V extends S["value"] = StateValueFrom<M>,
+    S extends MachineSnapshot<any, any, any, any, any, any, any, any>,
+    V extends Parameters<S["matches"]>[0],
 >(
     state: S,
     value: V,
-): state is S & { context: ContextForValue2<FetchACatStates, V> } => {
+): state is S & { context: ContextForValue<FetchACatStates, V> } => {
     return state.matches(value)
 }
 
-export const matches2 = <
-    TS extends TypestatesU,
-    M extends AnyStateMachine = AnyStateMachine,
-    S extends StateFrom<M> = StateFrom<M>,
-    V extends StateFrom<M>["value"] = StateValueFrom<M>,
->(
-    state: S,
-    value: V,
-): state is S & { context: ContextForValue2<TS, V> } => {
-    return state.matches(value)
-}
+export const matches3 =
+    <TS extends TypeStateUnknown>() =>
+    <
+        S extends MachineSnapshot<any, any, any, any, any, any, any, any>,
+        V extends TS["value"],
+    >(
+        state: S,
+        value: V,
+    ): state is S & { context: ContextForValue<TS, V> } => {
+        return state.matches(value)
+    }
